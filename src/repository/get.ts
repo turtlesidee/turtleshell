@@ -19,18 +19,3 @@ export const get =
             }),
         );
     };
-
-export const save =
-    (collection: Collection) =>
-    <T, K>(aggregate: Aggregate<T, K>): TE.TaskEither<Failed<unknown>, T[]> => {
-        return pipe(
-            TE.bindTo('new_events')(TE.of(get_new_events(aggregate))),
-            TE.bind('documents_saved', ({ new_events }) =>
-                TE.tryCatch(
-                    () => collection.insertMany(new_events),
-                    () => InternalServerError(),
-                ),
-            ),
-            TE.map(({ new_events }) => new_events),
-        );
-    };
