@@ -11,7 +11,7 @@ export const request_with_auth =
     <V extends { authorization: AuthorizationBearer }, N extends { jwt_secret: string }, R>(
         { claims, audiences }: { claims: string[]; audiences: string[] },
         codec: Codec<V>,
-        format_fn: FormatAuthorizationFn,
+        format_fn: FormatAuthorizationFn<V, R>,
     ) =>
     (req: Request, env: N): E.Either<Failed<unknown>, R> =>
         pipe(
@@ -23,6 +23,6 @@ export const request_with_auth =
         );
 
 export const request_without_auth =
-    <V, R>(codec: Codec<V>, format_fn: FormatFn) =>
+    <V, R>(codec: Codec<V>, format_fn: FormatFn<V, R>) =>
     (req: Request): E.Either<Failed<unknown>, R> =>
         pipe(E.bindTo('request')(validate(codec)(req)), E.map<{ request: V }, R>(format_fn));

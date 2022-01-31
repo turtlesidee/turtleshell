@@ -14,7 +14,13 @@ export const is_event_already_processed =
             ),
             TE.chain((eventFound) => {
                 if (!eventFound) {
-                    return TE.right(event);
+                    return pipe(
+                        TE.tryCatch(
+                            () => collection.insertOne(event),
+                            () => InternalServerError(),
+                        ),
+                        TE.map(() => event),
+                    );
                 }
                 return TE.left(BadRequest('Message already processed'));
             }),

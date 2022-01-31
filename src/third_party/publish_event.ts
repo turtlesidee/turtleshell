@@ -6,11 +6,16 @@ import * as TE from 'fp-ts/TaskEither';
 import { event_backup } from '../event_backup/event_backup';
 import { URL } from '../codecs';
 
-const publishEventP = <T>(ch: RealtimeChannelCallbacks, clientId: string, event: Event<T>): Promise<string> =>
+const publishEventP = <T>(
+    ch: RealtimeChannelCallbacks,
+    clientId: string,
+    event: Event<T>,
+    service_name: string,
+): Promise<string> =>
     new Promise((resolve, reject) => {
         const mess = {
             id: uuid(),
-            name: event.metadata.type.name,
+            name: `${service_name}_${event.metadata.type.name}`,
             clientId,
             data: event,
         };
@@ -18,14 +23,14 @@ const publishEventP = <T>(ch: RealtimeChannelCallbacks, clientId: string, event:
         ch.publish(mess, (err) => (err === null ? resolve('ok') : reject('no ok')));
     });
 
-const publish_event = <E extends { integrity_service_url: URL }, T>(
+const publish_event = <E extends { integrity_service_url: URL; service_name: string }, T>(
     ch: RealtimeChannelCallbacks,
     clientId: string,
     event: Event<T>,
     env: E,
 ): TE.TaskEither<string, string> => {
     return TE.tryCatch(
-        () => publishEventP(ch, clientId, event),
+        () => publishEventP(ch, clientId, event, env.service_name),
         () => {
             event_backup(env.integrity_service_url, event);
             return 'nok';
@@ -34,7 +39,11 @@ const publish_event = <E extends { integrity_service_url: URL }, T>(
 };
 
 export const publish =
-    <E extends { integrity_service_url: URL }, T>(ch: RealtimeChannelCallbacks, clientId: string, env: E) =>
+    <E extends { integrity_service_url: URL; service_name: string }, T>(
+        ch: RealtimeChannelCallbacks,
+        clientId: string,
+        env: E,
+    ) =>
     (events: Event<T>[]): string => {
         events.map((event) => publish_event(ch, clientId, event, env)());
         return '';

@@ -12,8 +12,8 @@ import { Event } from '../event/types';
 /* istanbul ignore next */
 export const retrieve =
     <T, K>(fn: RetrieveAggregateFunction<T, K>) =>
-    (id_key: string): TaskEither<Failed<unknown>, Aggregate<T, K>> =>
-        fn(id_key);
+    (id_key: string, key: string): TaskEither<Failed<unknown>, Aggregate<T, K>> =>
+        fn(id_key, key);
 
 /* istanbul ignore next */
 export const persist =

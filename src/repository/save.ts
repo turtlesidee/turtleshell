@@ -4,10 +4,10 @@ import { get_new_events } from '../aggregate/aggregate';
 import { pipe } from 'fp-ts/lib/function';
 import { Aggregate } from '../aggregate/types';
 import { Failed, InternalServerError } from '../output';
-
+import { Event } from '../event';
 export const save =
     (collection: Collection) =>
-    <T, K>(aggregate: Aggregate<T, K>): TE.TaskEither<Failed<unknown>, T[]> => {
+    <T, K>(aggregate: Aggregate<T, K>): TE.TaskEither<Failed<unknown>, Event<T>[]> => {
         return pipe(
             TE.bindTo('new_events')(TE.of(get_new_events(aggregate))),
             TE.bind('documents_saved', ({ new_events }) =>
@@ -16,6 +16,6 @@ export const save =
                     () => InternalServerError(),
                 ),
             ),
-            TE.map(({ new_events }) => new_events),
+            TE.map(({ new_events }) => new_events as unknown as Event<T>[]),
         );
     };

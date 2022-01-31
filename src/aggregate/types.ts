@@ -8,7 +8,10 @@ export interface Aggregate<T, K> {
     state: K;
 }
 
-export type RetrieveAggregateFunction<T, K> = (idKey: string) => TaskEither<Failed<unknown>, Aggregate<T, K>>;
+export type RetrieveAggregateFunction<T, K> = (
+    idKey: string,
+    key: string,
+) => TaskEither<Failed<unknown>, Aggregate<T, K>>;
 
 export type SaveAggregateFunction<T, K> = (aggregate: Aggregate<T, K>) => TaskEither<Failed<unknown>, Event<T>[]>;
 

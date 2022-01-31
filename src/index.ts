@@ -12,4 +12,4 @@ export * from './request';
 export * from './response/response';
 export * from './third_party';
 export * from './token';
-export * from 'util';
+export * from './utils';

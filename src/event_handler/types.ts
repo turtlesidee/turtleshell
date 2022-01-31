@@ -10,4 +10,4 @@ export interface EventHandler {
     name: string;
 }
 
-export type FromEventToCommand = <E, T, K, X>(event: Event<E>) => Command<T, K, X>;
+export type FromEventToCommand<T, K, X> = (event: Event<any>) => Command<T, K, X>;

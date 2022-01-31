@@ -5,7 +5,7 @@ export interface Codec<T> {
     decode: (d: unknown) => Validation<T>;
 }
 
-export type FormatAuthorizationFn = <T, R>({
+export type FormatAuthorizationFn<T, R> = ({
     request,
     jwt_token_decoded,
 }: {
@@ -13,4 +13,4 @@ export type FormatAuthorizationFn = <T, R>({
     jwt_token_decoded: JwtTokenDecoded;
 }) => R;
 
-export type FormatFn = <T, R>({ request }: { request: T }) => R;
+export type FormatFn<T, R> = ({ request }: { request: T }) => R;

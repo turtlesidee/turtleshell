@@ -9,12 +9,12 @@ import { CommandHandlerFn } from '../controller/types';
 import { URL } from '../codecs';
 import { event_backup } from '../event_backup/event_backup';
 
-export const event_handler = <N extends { integrity_service_url: URL }>(
+export const event_handler = <N extends { integrity_service_url: URL }, T, K, X, V, W>(
     env: N,
     collection_key: string,
     event_name: string,
-    from_event_to_command: FromEventToCommand,
-    command_handler: CommandHandlerFn,
+    from_event_to_command: FromEventToCommand<T, K, X>,
+    command_handler: CommandHandlerFn<N, T, K, X, V, W>,
     id_key?: string,
 ): EventHandler => {
     const handle = <T>(msg: Message) => {
@@ -25,9 +25,9 @@ export const event_handler = <N extends { integrity_service_url: URL }>(
             //@ts-ignore
             is_event_already_processed<T>(env[collection_key])(event_received),
             TE.map(from_event_to_command),
-            TE.chain((command) => command_handler(command, id_key)),
+            TE.chain((command) => command_handler(env, command, id_key)),
             TE.mapLeft(() => event_backup(env.integrity_service_url, event_received)),
-        );
+        )();
     };
     return {
         handle,
