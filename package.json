@@ -1,6 +1,6 @@
 {
   "name": "@turtleside/standard",
-  "version": "0.0.30",
+  "version": "0.0.37",
   "description": "standard share id library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -14,7 +14,8 @@
     "start": "node lib/index.js",
     "prepublish": "yarn build",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "pub": "yarn build && npm publish --access=public"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",

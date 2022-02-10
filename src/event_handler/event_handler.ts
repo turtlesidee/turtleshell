@@ -19,7 +19,6 @@ export const event_handler = <N extends { integrity_service_url: URL }, T, K, X,
 ): EventHandler => {
     const handle = <T>(msg: Message) => {
         const event_received = msg.data as Event<T>;
-
         pipe(
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore
