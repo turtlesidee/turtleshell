@@ -3,6 +3,7 @@ import { Command } from '../command/types';
 import { Failed, Succeeded } from '../output';
 import * as TE from 'fp-ts/TaskEither';
 import * as E from 'fp-ts/Either';
+import { Query } from '../query/types';
 
 export type ValidatorRequestFn<N extends { jwt_secret: string }, R> = (
     request: Request,
@@ -21,3 +22,10 @@ export type CommandHandlerFn<N, T, K, X, V, W> = (
     command: Command<T, K, X>,
     id_key?: string,
 ) => TE.TaskEither<Failed<unknown>, Succeeded<V, W>>;
+
+export type FromRequestToQueryFn<R, N, T, K> = (request: R, env: N) => Query<T, K>;
+
+export type QueryHandlerFn<N, T, K, X, W> = (
+    env: N,
+    query: Query<T, K>,
+) => TE.TaskEither<Failed<unknown>, Succeeded<X, W>>;

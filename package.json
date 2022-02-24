@@ -1,6 +1,6 @@
 {
   "name": "@turtleside/standard",
-  "version": "0.0.37",
+  "version": "0.0.39",
   "description": "standard share id library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
