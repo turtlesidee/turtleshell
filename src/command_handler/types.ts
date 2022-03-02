@@ -13,4 +13,4 @@ export type AggregateFunctionTE<T, K, X> = (
     command: Command<T, K, X>,
 ) => (aggregate: Aggregate<T, K>, env?: any) => TE.TaskEither<Failed<unknown>, Aggregate<T, K>>;
 
-export type ResponseFunction<T, V, W> = ({ new_events }: { new_events: Event<T>[] }) => Succeeded<V, W>;
+export type ResponseFunction<T, V> = ({ new_events }: { new_events: Event<T>[] }) => Succeeded<V>;

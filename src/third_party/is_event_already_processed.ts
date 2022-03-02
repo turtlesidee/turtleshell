@@ -10,7 +10,7 @@ export const is_event_already_processed =
         return pipe(
             TE.tryCatch(
                 () => collection.findOne<Event<T>>({ 'metadata.id': event.metadata.id }),
-                () => InternalServerError(),
+                (e) => InternalServerError(JSON.stringify(e)),
             ),
             TE.chain((eventFound) => {
                 if (!eventFound) {

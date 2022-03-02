@@ -7,8 +7,8 @@ import { AggregateFunction, ResponseFunction } from './types';
 import { AggregateFunctionTE } from '.';
 
 export const command_handler =
-    <V, W, Y, T, K, X>(aggregate_fn: AggregateFunction<T, K, X>, response_fn: ResponseFunction<T, V, W>) =>
-    (env: Y, command: Command<T, K, X>, id_key = 'id'): TE.TaskEither<Failed<unknown>, Succeeded<V, W>> =>
+    <V, Y, T, K, X>(aggregate_fn: AggregateFunction<T, K, X>, response_fn: ResponseFunction<T, V>) =>
+    (env: Y, command: Command<T, K, X>, id_key = 'id'): TE.TaskEither<Failed<unknown>, Succeeded<V>> =>
         pipe(
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore
@@ -20,8 +20,8 @@ export const command_handler =
         );
 
 export const command_handler_TE =
-    <V, W, Y, T, K, X>(aggregate_fn: AggregateFunctionTE<T, K, X>, response_fn: ResponseFunction<T, V, W>) =>
-    (env: Y, command: Command<T, K, X>, id_key = 'id'): TE.TaskEither<Failed<unknown>, Succeeded<V, W>> =>
+    <V, Y, T, K, X>(aggregate_fn: AggregateFunctionTE<T, K, X>, response_fn: ResponseFunction<T, V>) =>
+    (env: Y, command: Command<T, K, X>, id_key = 'id'): TE.TaskEither<Failed<unknown>, Succeeded<V>> =>
         pipe(
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore

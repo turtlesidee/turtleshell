@@ -13,7 +13,7 @@ export const save =
             TE.bind('documents_saved', ({ new_events }) =>
                 TE.tryCatch(
                     () => collection.insertMany(new_events),
-                    () => InternalServerError(),
+                    (e) => InternalServerError(JSON.stringify(e)),
                 ),
             ),
             TE.map(({ new_events }) => new_events as unknown as Event<T>[]),

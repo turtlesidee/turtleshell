@@ -10,12 +10,12 @@ import { URL } from '../codecs';
 import { event_backup } from '../event_backup/event_backup';
 import { register_event } from '../third_party/register_event';
 
-export const event_handler = <N extends { integrity_service_url: URL }, T, K, X, V, W>(
+export const event_handler = <N extends { integrity_service_url: URL }, T, K, X, V>(
     env: N,
     collection_key: string,
     event_name: string,
     from_event_to_command: FromEventToCommand<T, K, X>,
-    command_handler: CommandHandlerFn<N, T, K, X, V, W>,
+    command_handler: CommandHandlerFn<N, T, K, X, V>,
     id_key?: string,
 ): EventHandler => {
     const handle = <T>(msg: Message) => {

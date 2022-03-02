@@ -10,6 +10,7 @@ export const WRITE_USER = 'write:user' as Claim;
 export const WRITE_ONBOARDING_REQUEST = 'write:onboarding_request' as Claim;
 export const REVIEW_ONBOARDING_REQUEST = 'review:onboarding_request' as Claim;
 export const READ_ONBOARDING_REQUEST = 'read:onboarding_request' as Claim;
+export const MULTIPLE_ONBOARDING_REQUEST = 'multiple:onboarding_request' as Claim;
 
 export const EXECUTE_CLASSIFICATION = 'execute:classification' as Claim;
 export const EXECUTE_EXTRACTION = 'execute:extraction' as Claim;

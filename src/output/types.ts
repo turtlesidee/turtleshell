@@ -6,11 +6,10 @@ export type Failed<T> = {
     internal?: string;
 };
 
-export type Succeeded<K, T> = {
+export type Succeeded<K> = {
     status: 'success';
     message: string;
     http_code: number;
     payload?: K;
-    description?: T;
     internal?: string;
 };

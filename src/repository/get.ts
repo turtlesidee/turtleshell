@@ -12,7 +12,7 @@ export const get =
         return pipe(
             TE.tryCatch(
                 () => collection.find<T>({ [`data.${key}`]: id }).toArray(),
-                () => InternalServerError(),
+                (e) => InternalServerError(JSON.stringify(e)),
             ),
             TE.map((events) => {
                 return hydrate(aggregate_function, events, initial_state);

@@ -17,15 +17,12 @@ export type ValidatorRequestFnTE<N extends { jwt_secret: string }, R> = (
 
 export type FromRequestToCommandFn<N, R, T, K, X> = (request: R, env: N) => Command<T, K, X>;
 
-export type CommandHandlerFn<N, T, K, X, V, W> = (
+export type CommandHandlerFn<N, T, K, X, V> = (
     env: N,
     command: Command<T, K, X>,
     id_key?: string,
-) => TE.TaskEither<Failed<unknown>, Succeeded<V, W>>;
+) => TE.TaskEither<Failed<unknown>, Succeeded<V>>;
 
 export type FromRequestToQueryFn<R, N, T, K> = (request: R, env: N) => Query<T, K>;
 
-export type QueryHandlerFn<N, T, K, X, W> = (
-    env: N,
-    query: Query<T, K>,
-) => TE.TaskEither<Failed<unknown>, Succeeded<X, W>>;
+export type QueryHandlerFn<N, T, K, X> = (env: N, query: Query<T, K>) => TE.TaskEither<Failed<unknown>, Succeeded<X>>;

@@ -10,7 +10,7 @@ export const register_event =
         return pipe(
             TE.tryCatch(
                 () => collection.insertOne(event),
-                () => InternalServerError(),
+                (e) => InternalServerError(JSON.stringify(e)),
             ),
         );
     };
